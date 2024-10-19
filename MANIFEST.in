@@ -1,2 +1,1 @@
-include configs/algos_cfgs/*.yaml
-include configs/envs_cfgs/*.yaml
+recursive-include harl/configs *
