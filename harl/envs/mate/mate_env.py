@@ -1,6 +1,7 @@
 import copy
 
 import mate
+import numpy as np
 from mate.agents import GreedyCameraAgent, GreedyTargetAgent
 
 
@@ -24,7 +25,7 @@ class CameraVGreedyEnv:
         state = copy.deepcopy(obs)
         dones = [done] * self.n_agents
         available_actions = self._get_avail_actions()
-        return obs, state, rewards, dones, info, available_actions
+        return obs, state, [list(rewards)], dones, info, available_actions
 
     def reset(self):
         obs = self.env.reset()
