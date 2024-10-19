@@ -93,6 +93,13 @@ def make_train_env(env_name, seed, n_threads, env_args):
                 from harl.envs.lag.lag_env import LAGEnv
 
                 env = LAGEnv(env_args)
+            elif env_name == "mate":
+                from harl.envs.mate.mate_env import CameraVGreedyEnv, TargetVGreedyEnv
+                if env_args["scenario"] == "camera_greedy":
+                    env = CameraVGreedyEnv(env_args)
+                elif env_args["scenario"] == "target_greedy":
+                    env = TargetVGreedyEnv(env_args)
+
             else:
                 print("Can not support the " + env_name + "environment.")
                 raise NotImplementedError
@@ -146,6 +153,13 @@ def make_eval_env(env_name, seed, n_threads, env_args):
                 from harl.envs.lag.lag_env import LAGEnv
 
                 env = LAGEnv(env_args)
+            elif env_name == "mate":
+                from harl.envs.mate.mate_env import CameraVGreedyEnv, TargetVGreedyEnv
+
+                if env_args["scenario"] == "camera_greedy":
+                    env = CameraVGreedyEnv(env_args)
+                elif env_args["scenario"] == "target_greedy":
+                    env = TargetVGreedyEnv(env_args)
             else:
                 print("Can not support the " + env_name + "environment.")
                 raise NotImplementedError
@@ -256,4 +270,6 @@ def get_num_agents(env, env_args, envs):
     elif env == "dexhands":
         return envs.n_agents
     elif env == "lag":
+        return envs.n_agents
+    elif env == "mate":
         return envs.n_agents
