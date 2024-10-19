@@ -25,14 +25,14 @@ class CameraVGreedyEnv:
         state = copy.deepcopy(obs)
         dones = [done] * self.n_agents
         available_actions = self._get_avail_actions()
-        return obs, state, [[rewards]], dones, info, available_actions
+        return obs, state, [[rewards]], dones, info, None
 
     def reset(self):
         obs = self.env.reset()
         state = copy.deepcopy(obs)
 
         available_actions = self._get_avail_actions()
-        return obs, state, available_actions
+        return obs, state, None
 
     def seed(self, seed):
         pass
