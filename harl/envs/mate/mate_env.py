@@ -22,6 +22,7 @@ class CameraVGreedyEnv:
         camera_joint_action = actions
         results = self.env.step(camera_joint_action)
         obs, rewards, done, info = results
+        info.update({"coverage_rate": self.env.coverage_rate})
         state = copy.deepcopy(obs)
         dones = [done] * self.n_agents
         available_actions = self._get_avail_actions()
