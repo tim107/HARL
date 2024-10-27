@@ -33,7 +33,7 @@ class MateLogger(BaseLogger):
         self.eval_episode_rewards = np.concatenate(
             [rewards for rewards in self.eval_episode_rewards if rewards]
         )
-        mean_coverage = np.mean(self.final_rate_list)
+        mean_coverage = np.nanmean(self.final_rate_list)
         self.final_rate_list = []
         eval_env_infos = {
             "eval_average_episode_rewards": self.eval_episode_rewards,
