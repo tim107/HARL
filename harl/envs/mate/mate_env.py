@@ -3,6 +3,10 @@ import copy
 import mate
 import numpy as np
 from mate.agents import GreedyCameraAgent, GreedyTargetAgent
+import warnings
+
+# Bad practice
+warnings.filterwarnings("ignore")
 
 
 class CameraVGreedyEnv:

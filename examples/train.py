@@ -53,6 +53,13 @@ def main():
         default="",
         help="If set, load existing experiment config file instead of reading from yaml config file.",
     )
+
+    parser.add_argument(
+        "--target",
+        type=bool,
+        default=False,
+        help="Set to true to load target variant of MATE",
+    )
     args, unparsed_args = parser.parse_known_args()
 
     def process(arg):
@@ -75,6 +82,9 @@ def main():
     else:  # load config from corresponding yaml file
         algo_args, env_args = get_defaults_yaml_args(args["algo"], args["env"])
     update_args(unparsed_dict, algo_args, env_args)  # update args from command line
+
+    if args["target"]:
+        env_args.update({"scenario": "target_greedy"})
 
     if args["env"] == "dexhands":
         import isaacgym  # isaacgym has to be imported before PyTorch
