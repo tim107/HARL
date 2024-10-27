@@ -17,8 +17,12 @@ class MateLogger(BaseLogger):
         """Log evaluation information per step."""
         super().eval_per_step(eval_data)
         for eval_i in range(self.algo_args["eval"]["n_eval_rollout_threads"]):
-            if self.eval_infos[eval_i].get("coverage_rate"):
-                self.rate_list[eval_i] = self.eval_infos.get("coverage_rate")
+            cov_list = []
+            for agent_info in self.eval_infos[eval_i]:
+                if agent_info.get("coverage_rate"):
+                    cov_list.append(agent_info.get("coverage_rate"))
+            self.rate_list[eval_i] = np.mean(cov_list)
+
 
     def eval_thread_done(self, tid):
         super().eval_thread_done(tid)
