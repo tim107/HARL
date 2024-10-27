@@ -21,8 +21,7 @@ class MateLogger(BaseLogger):
             for agent_info in self.eval_infos[eval_i]:
                 if agent_info.get("coverage_rate"):
                     cov_list.append(agent_info.get("coverage_rate"))
-            self.rate_list[eval_i] = np.mean(cov_list)
-            print("cov_list mean", self.rate_list)
+            self.rate_list[eval_i] = np.nanmean(cov_list)
 
 
     def eval_thread_done(self, tid):
