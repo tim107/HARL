@@ -60,6 +60,13 @@ def main():
         default=False,
         help="Set to true to load target variant of MATE",
     )
+
+    parser.add_argument(
+        "--stationary_type",
+        type=str,
+        default="greedy",
+        help="Manual configuration for the stationary mate agent",
+    )
     args, unparsed_args = parser.parse_known_args()
 
     def process(arg):
@@ -85,6 +92,8 @@ def main():
 
     if args["target"]:
         env_args.update({"scenario": "target_greedy"})
+
+    env_args.update({"stationary_type": args["stationary_type"]})
 
     if args["env"] == "dexhands":
         import isaacgym  # isaacgym has to be imported before PyTorch

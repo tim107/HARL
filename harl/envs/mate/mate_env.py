@@ -2,7 +2,8 @@ import copy
 
 import mate
 import numpy as np
-from mate.agents import GreedyCameraAgent, GreedyTargetAgent, RandomCameraAgent
+from mate.agents import (RandomCameraAgent, GreedyCameraAgent, HeuristicCameraAgent, RandomTargetAgent,
+                         GreedyTargetAgent, HeuristicTargetAgent)
 import warnings
 
 # Bad practice
@@ -13,7 +14,14 @@ class CameraVGreedyEnv:
     def __init__(self, env_args):
         base_env = mate.make('MultiAgentTracking-v0')
         base_env = mate.RenderCommunication(base_env)
-        env = mate.MultiCamera(base_env, target_agent=GreedyTargetAgent())
+        if env_args["stationary_type"] == "random":
+            stationary_agent = RandomTargetAgent
+        elif env_args["stationary_type"] == "greedy":
+            stationary_agent = GreedyTargetAgent
+        elif env_args["stationary_type"] == "heuristic":
+            stationary_agent = HeuristicTargetAgent
+
+        env = mate.MultiCamera(base_env, target_agent=stationary_agent())
         self.env = env
         self.n_agents = env.num_teammates  # 4
         self.share_observation_space = self.env.teammate_joint_observation_space
@@ -59,7 +67,13 @@ class TargetVGreedyEnv:
     def __init__(self, env_args):
         base_env = mate.make('MultiAgentTracking-v0')
         base_env = mate.RenderCommunication(base_env)
-        env = mate.MultiTarget(base_env, camera_agent=RandomCameraAgent())
+        if env_args["stationary_type"] == "random":
+            stationary_agent = RandomCameraAgent
+        elif env_args["stationary_type"] == "greedy":
+            stationary_agent = GreedyCameraAgent
+        elif env_args["stationary_type"] == "heuristic":
+            stationary_agent = HeuristicCameraAgent
+        env = mate.MultiTarget(base_env, camera_agent=stationary_agent())
         self.env = env
         self.n_agents = env.num_teammates  # 8
         self.share_observation_space = self.env.teammate_joint_observation_space
@@ -72,7 +86,6 @@ class TargetVGreedyEnv:
         target_joint_action = actions
         results = self.env.step(target_joint_action)
         obs, rewards, done, info = results
-        print("rewards target:", rewards)
         state = copy.deepcopy(obs)
         dones = [done] * self.n_agents
         available_actions = self._get_avail_actions()
