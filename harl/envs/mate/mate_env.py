@@ -72,6 +72,7 @@ class TargetVGreedyEnv:
         target_joint_action = actions
         results = self.env.step(target_joint_action)
         obs, rewards, done, info = results
+        print("rewards target:", rewards)
         state = copy.deepcopy(obs)
         dones = [done] * self.n_agents
         available_actions = self._get_avail_actions()
