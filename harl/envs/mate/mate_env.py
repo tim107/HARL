@@ -2,7 +2,7 @@ import copy
 
 import mate
 import numpy as np
-from mate.agents import GreedyCameraAgent, GreedyTargetAgent
+from mate.agents import GreedyCameraAgent, GreedyTargetAgent, RandomCameraAgent
 import warnings
 
 # Bad practice
@@ -59,7 +59,7 @@ class TargetVGreedyEnv:
     def __init__(self, env_args):
         base_env = mate.make('MultiAgentTracking-v0')
         base_env = mate.RenderCommunication(base_env)
-        env = mate.MultiTarget(base_env, camera_agent=GreedyCameraAgent())
+        env = mate.MultiTarget(base_env, camera_agent=RandomCameraAgent())
         self.env = env
         self.n_agents = env.num_teammates  # 8
         self.share_observation_space = self.env.teammate_joint_observation_space
