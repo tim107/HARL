@@ -17,11 +17,11 @@ train:
   # number of total training steps
   num_env_steps: 1000000
   # number of steps per environment per training data collection
-  episode_length: 200
+  episode_length: 500
   # logging interval
-  log_interval: 5
+  log_interval: 2
   # evaluation interval
-  eval_interval: 25
+  eval_interval: 10
   # whether to use ValueNorm
   use_valuenorm: True
   # whether to use linear learning rate decay
@@ -45,9 +45,9 @@ render:
 model:
   # network parameters
   # hidden sizes for mlp module in the network
-  hidden_sizes: [128, 128]
+  hidden_sizes: [512, 256]
   # activation function, choose from sigmoid, tanh, relu, leaky_relu, selu
-  activation_func: relu
+  activation_func: tanh
   # whether to use feature normalization
   use_feature_normalization: True
   # initialization method for network parameters, choose from xavier_uniform_, orthogonal_, ...
@@ -58,11 +58,11 @@ model:
   # whether to use rnn policy (data is not chunked for training)
   use_naive_recurrent_policy: False
   # whether to use rnn policy (data is chunked for training)
-  use_recurrent_policy: False
+  use_recurrent_policy: True
   # number of recurrent layers
   recurrent_n: 1
   # length of data chunk; only useful when use_recurrent_policy is True; episode_length has to be a multiple of data_chunk_length
-  data_chunk_length: 10
+  data_chunk_length: 25
   # optimizer parameters
   # actor learning rate
   lr: 0.0005
@@ -85,13 +85,13 @@ algo:
   # whether to use clipped value loss
   use_clipped_value_loss: True
   # clip parameter
-  clip_param: 0.2
+  clip_param: 0.3
   # number of mini-batches per epoch for actor update
   actor_num_mini_batch: 1
   # number of mini-batches per epoch for critic update
   critic_num_mini_batch: 1
   # coefficient for entropy term in actor loss
-  entropy_coef: 0.01
+  entropy_coef: 0.05
   # coefficient for value loss
   value_loss_coef: 1
   # whether to clip gradient norm
